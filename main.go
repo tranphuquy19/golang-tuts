@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-  "time"
+	"io"
 )
+import "net/http"
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-	fmt.Println("My favorite number is", rand.Intn(10))
+	fmt.Println("test go")
+	resp, _ := http.Get("https://api.ipify.org")
+	defer resp.Body.Close()
+	body, _ := io.ReadAll(resp.Body)
+	ip := string(body)
+	fmt.Println(ip)
 }
